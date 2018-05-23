@@ -1,12 +1,15 @@
 package com.android.teaching.miprimeraapp;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,9 +24,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.teaching.miprimeraapp.basedatos.AppDatabase;
 import com.android.teaching.miprimeraapp.interactors.GamesInteractor;
 import com.android.teaching.miprimeraapp.login.view.LoginActivity;
 
+import java.io.File;
+import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
@@ -44,6 +50,8 @@ public class ListActivity extends AppCompatActivity {
         gameIcons.add(R.drawable.overwatch_icon);
         gameIcons.add(R.drawable.lol_icon);
 
+
+
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
@@ -63,6 +71,14 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        File directorioInterno = getFilesDir();
+        File cacheInterno = getCacheDir();
+
+        Log.d("ListActivity", "Interno: " + directorioInterno.getAbsolutePath());
+        Log.d("ListActivity", "Cache: " + cacheInterno.getAbsolutePath());
+
+
     }
 
     @Override
@@ -127,4 +143,6 @@ public class ListActivity extends AppCompatActivity {
             return rowView;
         }
     }
+
+
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1044815191772",
+    "firebase_url": "https://aplication-4925d.firebaseio.com",
+    "project_id": "aplication-4925d",
+    "storage_bucket": "aplication-4925d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044815191772:android:6fae59f0125e22ee",
+        "android_client_info": {
+          "package_name": "com.android.teaching.miprimeraapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044815191772-j3br37e7a1qtkqqbd0c9f4opdeken76e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.teaching.miprimeraapp",
+            "certificate_hash": "dd7ca067e3c9d82ab02a5e1c42b501467f9a1e16"
+          }
+        },
+        {
+          "client_id": "1044815191772-quhv89bppn5fmij05hj518l9nnmcd99i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcXqqcfzZNJea4XOQjn2tKepNG330MLrw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044815191772-quhv89bppn5fmij05hj518l9nnmcd99i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

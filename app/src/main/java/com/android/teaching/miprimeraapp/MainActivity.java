@@ -11,6 +11,8 @@ import android.view.View;
 import com.android.teaching.miprimeraapp.gallery.GalleryActivity;
 import com.android.teaching.miprimeraapp.login.view.LoginActivity;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
+
     }
 
     public void onClick(View view) {
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 
     @Override
     protected void onStart() {

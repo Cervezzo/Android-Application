@@ -21,11 +21,20 @@
     <!-- Login Activity -->
     <string name="username_error">Usuario no puede estar vacío.</string>
     <string name="password_error">La contraseña no puede ser vacía.</string>
+    <string name="user_preferences">
+        com.android.teaching.miprimeraapp.USERNAME_PREFERENCES
+    </string>
+
+    <!-- usaremos este string para todos los preferences, no es necesario crear uno para cada uno -->
+    <string name="register_user_preferences">REGISTER_USER_PREFERENCES</string>
+
 
     <!-- Profile Activity -->
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+
+
 
     <!-- Games -->
     <string name="overwatch_description">En una época de crisis global, un grupo de héroes formó un escuadrón internacional en aras de devolver la paz a un mundo devastado por la guerra. Este grupo se autodenominó OVERWATCH.
