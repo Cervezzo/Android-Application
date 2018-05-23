@@ -8,24 +8,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SecondActivity" />
-        <activity
-            android:name=".ProfileActivity"
-            android:parentActivityName=".login.view.LoginActivity" />
-        <activity android:name=".GameDetailActivity" />
-        <activity
-            android:name=".login.view.LoginActivity"
-            android:label="Login"
-            android:parentActivityName=".ListActivity" />
-        <activity android:name=".gallery.GalleryActivity" />
-        <activity android:name=".ListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SecondActivity"></activity>
     </application>
 
 </manifest>

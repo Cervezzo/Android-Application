@@ -21,12 +21,6 @@
         android:orientation="vertical"
         android:padding="4dp">
 
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/lambda"
-            android:scaleType="centerCrop"
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

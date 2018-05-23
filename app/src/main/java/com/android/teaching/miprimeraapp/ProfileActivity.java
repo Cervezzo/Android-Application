@@ -1,14 +1,8 @@
 package com.android.teaching.miprimeraapp;
 
 import android.app.DatePickerDialog;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteConstraintException;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,15 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.android.teaching.miprimeraapp.basedatos.AppDatabase;
-import com.android.teaching.miprimeraapp.basedatos.User;
-
-import java.io.File;
 import java.util.Calendar;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -40,25 +28,6 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText ageEditText;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
-
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-
-        return false;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +43,15 @@ public class ProfileActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     // MOSTRAR DatePickerDialog
-                    new DatePickerDialog(ProfileActivity.this,
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePicker view,
-                                                      int year, int month, int dayOfMonth) {
-                                    // Escribir la fecha en el edit text
-                                    int anoActual = Calendar.getInstance().get(Calendar.YEAR);
-                                    int edad = anoActual - year;
-                                    ageEditText.setText(String.valueOf(edad));
-                                }
-                            }, 1980, 1, 1).show();
+                    new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            // Escribir la fecha en el edit text
+                            int anoActual = Calendar.getInstance().get(Calendar.YEAR);
+                            int edad = anoActual - year;
+                            ageEditText.setText(String.valueOf(edad));
+                        }
+                    }, 1980, 1, 1).show();
                 }
             }
         });
@@ -96,87 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-        Log.d("ListActivity", "¿Existe y puedo escribir?: "
-                + isExternalStorageWritable());
-        Log.d("ListActivity", "¿Existe y puedo leer?: "
-                + isExternalStorageReadable());
-
-
-        // para cargar imagen de perfil
-        if (isExternalStorageReadable()) {
-            File imgFile = new File(getExternalFilesDir(null), "halflife-lambda.jpg");
-            if (imgFile.exists()) {
-                ImageView myImage = findViewById(R.id.lambda);
-                myImage.setImageURI(Uri.fromFile(imgFile));
-            }
-        }
-
-
     }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                getString(R.string.user_preferences),
-                Context.MODE_PRIVATE);
-        String usernameValue = sharedPreferences.getString("username_key", "");
-        AppDatabase myDataBase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name")
-                .allowMainThreadQueries()
-                .build();
-        User myUser = myDataBase.userDao().findByUsername(usernameValue);
-        if (myUser != null) {
-            usernameEditText.setText(myUser.getUsername());
-            emailEditText.setText(myUser.getEmail());
-            ageEditText.setText(myUser.getAge());
-            passwordEditText.setText(myUser.getPassword());
-            if (myUser.getGender().equals("H")) {
-                radioButtonMale.setChecked(true);
-            } else if (myUser.getGender().equals("M")) {
-                radioButtonFemale.setChecked(true);
-            }
-        }
-
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        String username = usernameEditText.getText().toString();
-        SharedPreferences sharedPref = getSharedPreferences(
-                getString(R.string.register_user_preferences),
-                Context.MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("username_register_key", username);
-
-
-        String email = emailEditText.getText().toString();
-
-        editor.putString("email_register_key", email);
-
-
-        String age = ageEditText.getText().toString();
-
-        editor.putString("age_register_key", age);
-
-        if (radioButtonMale.isChecked()) {
-            editor.putString("gender_key", "H");
-        } else if (radioButtonFemale.isChecked()) {
-            editor.putString("gender_key", "M");
-        }
-
-        editor.apply();
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -211,56 +98,22 @@ public class ProfileActivity extends AppCompatActivity {
         if (radioButtonMale.isChecked()) {
             // El usuario ha seleccionado "H"
             Log.d("ProfileActivity", "Gender: male");
-        } else if (radioButtonFemale.isChecked()) {
+        } else if(radioButtonFemale.isChecked()) {
             // El usuario ha seleccionado "M"
             Log.d("ProfileActivity", "Gender: female");
-        }
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name")
-                .allowMainThreadQueries()
-                .build();
-
-        try {
-            User user = new User();
-            user.setAge(ageEditText.getText().toString());
-            user.setEmail(emailEditText.getText().toString());
-            user.setUsername(usernameEditText.getText().toString());
-            user.setPassword(passwordEditText.getText().toString());
-            if (radioButtonMale.isChecked()) {
-                // El usuario ha seleccionado "H"
-                user.setGender("H");
-            } else if (radioButtonFemale.isChecked()) {
-                // El usuario ha seleccionado "M"
-                user.setGender("M");
-            }
-            db.userDao().insert(user);
-        } catch (SQLiteConstraintException ex) {
-
         }
     }
 
     public void guardarDatos(View view) {
         saveInternal();
-        SharedPreferences sharePref =
-                getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharePref.edit();
-        editor.remove("username");
-        editor.remove("email");
-        editor.remove("age");
-        editor.apply();
-
-
     }
-
 
     /**
      * Método que se ejecutará cuando el usuario pulse "Delete"
      *
-     * @param view -
+     * @param view  -
      */
     public void onDelete(View view) {
-
-
         // Mostrar un dialogo de confirmación
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -293,6 +146,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         builder.create().show();
     }
+
+
+
+
+
+
+
+
+
 
 
 }
